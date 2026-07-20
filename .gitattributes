@@ -1,0 +1,4 @@
+data/BART/demand.csv.gz filter=lfs diff=lfs merge=lfs -text
+data/BART/GMNS/OD_demand_td.csv filter=lfs diff=lfs merge=lfs -text
+data/Phoenix/GTFS/stop_times.txt filter=lfs diff=lfs merge=lfs -text
+data/King_county/GTFS/stop_times.txt filter=lfs diff=lfs merge=lfs -text
