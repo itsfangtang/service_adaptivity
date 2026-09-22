@@ -1,0 +1,24 @@
+{
+  "beta_per_km": 0.05,
+  "n_directed_route_sequences": 14,
+  "od_estimation_rows": 750,
+  "max_rel_boardings_error": 4.701040843071648e-16,
+  "mean_trip_km_avg": 3.460410092603869,
+  "cross_line_newell": {
+    "ref_month": "2023-10",
+    "n_directed_routes": 14,
+    "total_boardings": 10384.0,
+    "total_freq": 83.0,
+    "W_observed_freq": 849.057738095238,
+    "W_uniform": 875.7590361445782,
+    "W_sqrt": 819.4348635777116,
+    "pct_sqrt_vs_uniform": 6.431469187554938,
+    "pct_sqrt_vs_observed": 3.488911670952079,
+    "pct_observed_vs_uniform": 3.0489320631950707
+  },
+  "monthly_window": "2020-04_to_2024-05",
+  "monthly_n": 50,
+  "monthly_pct_sqrt_vs_uniform": 2.132804687909036,
+  "y2019_partial_pct_sqrt_vs_uniform": 0.06520325383897992,
+  "note": "Boardings are AM-peak (5am\u20139am) average weekday directed-route totals. Stop OD uses GTFS sequences + mid-peak prior + forward gravity; not surveyed OD."
+}

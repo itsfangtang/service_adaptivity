@@ -1,0 +1,15 @@
+{
+  "n_stations_matched": 46,
+  "beta_per_km": 0.114579522,
+  "ref_month": "2023-10-23",
+  "ref_mean_trip_km": 7.233726906043867,
+  "window": "2020-04_to_2024-06",
+  "n_months_window": 45,
+  "newell_pct_saving_vs_uniform": 1.3677382572694783,
+  "newell_star_pct_saving_vs_uniform": 1.3677382572694903,
+  "newell_pct_saving_3x_envelope": 1.3677382572694483,
+  "year2019_pct_saving_vs_uniform": 0.1126073543676919,
+  "W_uniform_window": 15523836.1875,
+  "W_sqrt_window": 15311510.740967719,
+  "note": "Waiting units are relative under monthly stage lengths=1 and c0=1; n_dep equals the number of months (unit service intensity per month under uniform)."
+}

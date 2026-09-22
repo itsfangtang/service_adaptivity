@@ -1,0 +1,47 @@
+station,lat,lon,gtfs,ok
+Metro Parkway,33.579748,-112.119567,Metro Pkwy E & 27th Av,True
+Mountain View/ 25th Ave,33.5675,-112.111,manual_extension,True
+25th Ave/ Dunlap,33.5672,-112.1115,manual_extension,True
+19th Ave/Dunlap,33.567384,-112.100848,19th Ave/Dunlap,True
+Northern/19th Ave,33.55227,-112.099612,Northern/19th Ave,True
+Glendale/19th Ave,33.537448,-112.099663,Glendale/19th Ave,True
+19th Ave/Montebello,33.52034775,-112.099544,Montebello/19th Ave,True
+19th Ave/Camelback,33.509537,-112.09882366666666,19th Ave/Camelback,True
+7th Ave/Camelback,33.509288,-112.08333499999999,7th Ave/Camelback,True
+Central Ave/Camelback,33.50865966666667,-112.07529533333333,Central Ave/Camelback,True
+Campbell/Central Ave,33.501398,-112.07376800000002,Campbell/Central Ave,True
+Indian School/Central Ave,33.495749,-112.073773,Indian School/Central Ave,True
+Osborn/Central Ave,33.48686,-112.073794,Osborn/Central Ave,True
+Thomas/Central Ave,33.481233,-112.073761,Thomas/Central Ave,True
+Encanto/Central Ave,33.473655,-112.073799,Encanto/Central Ave,True
+McDowell/Central Ave,33.464703,-112.07381100000002,McDowell/Central Ave,True
+Roosevelt/Central Ave,33.459382999999995,-112.07394099999999,Roosevelt/Central Ave,True
+WB Van Buren/Central Ave,33.451922,-112.073955,Van Buren/Central Ave,True
+EB Van Buren/1st Ave,33.451861,-112.075038,Van Buren/1st Ave,True
+EB Jefferson/1st Ave,33.447823,-112.075234,Jefferson/1st Ave,True
+WB Washington/Central Ave,33.44889,-112.073866,Washington/Central Ave,True
+EB 3rd St/Jefferson,33.446274,-112.069297,3rd St/Jefferson,True
+WB 3rd St/Washington,33.448352,-112.070595,3rd St/Washington,True
+WB 12th St/Washington,33.448248,-112.057179,12th St/Washington,True
+EB 12th St/Jefferson,33.447199,-112.055664,12th St/Jefferson,True
+EB 24th St/Jefferson,33.447229,-112.029262,24th St/Jefferson,True
+WB 24th St/Washington,33.448192,-112.029285,24th St/Washington,True
+38th St/Washington,33.448102,-111.999879,38th St/Washington,True
+44th St/Washington,33.448168,-111.98798,44th St/Washington,True
+50th St/Washington,33.446988,-111.97526833333332,50th St/Washington St,True
+Priest Dr/Washington St,33.442242799999995,-111.95631839999999,Priest Dr & Washington St,True
+Center Pkwy/Washington St,33.438047,-111.94660500000002,Center Pkwy/Washington,True
+Mill Ave/Third St,33.427505333333336,-111.94069833333333,Mill Ave/3rd St,True
+Veterans Way/College Ave,33.42610533333333,-111.93594833333334,Veterans Way/College Ave,True
+University Dr/Rural,33.4205776,-111.92703039999999,University/Rural TC,True
+Dorsey/Apache Blvd,33.414776,-111.916899,Dorsey Ln/Apache Blvd,True
+McClintock/Apache Blvd,33.41474,-111.908269,McClintock Dr/Apache Blvd,True
+Smith-Martin/Apache Blvd,33.414789,-111.900799,Smith-Martin/Apache Blvd,True
+Price-101 Fwy/Apache Blvd,33.414821,-111.88811400000002,Price-101/Apache Blvd,True
+Sycamore/Main St,33.41545411111111,-111.87054400000001,Sycamore/Main St TC,True
+Alma School/Main St,33.41494,-111.855564,Alma School/Main St,True
+Country Club/Main St,33.41512,-111.839074,Country Club/Main St,True
+Center/Main St,33.41511,-111.830655,Center/Main St,True
+Mesa Dr/Main St,33.4151202,-111.82244920000001,Mesa Dr & Main St,True
+Stapley/Main St,33.415180799999995,-111.8039802,Stapley Dr & Main St,True
+Gilbert Rd/Main St,33.415159333333335,-111.79006711111111,Gilbert Rd & Main St,True
