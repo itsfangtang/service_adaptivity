@@ -1,0 +1,4 @@
+route_id,agency_id,route_short_name,route_long_name,route_desc,route_type,route_url,route_division,alt_route_type
+RAIL,1,RAIL,"Valley Metro Rail",,0,,VMLR,903
+S,1,S,"Valley Metro Streetcar",,0,,TSC,902
+SKYT,10,SKYT,"PHX Sky Train",,0,https://www.skyharbor.com/PHXSkyTrain,SKYT,905

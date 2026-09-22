@@ -1,0 +1,8 @@
+route_id,agency_id,route_short_name,route_long_name,route_desc,route_type,route_url,route_color,route_text_color
+100512,1,"A Line","","Federal Way TC - SeaTac - Tukwila Intl Blvd Sta",3,https://kingcounty.gov/en/dept/metro/routes-and-service/schedules-and-maps/a-line.html,,
+102548,1,"B Line","","Redmond TC - Overlake TC - Bellevue TC",3,https://kingcounty.gov/en/dept/metro/routes-and-service/schedules-and-maps/b-line.html,,
+102576,1,"C Line","","Valley St/Fairview Av N - SW Barton St/26 Av SW",3,https://kingcounty.gov/en/dept/metro/routes-and-service/schedules-and-maps/c-line.html,,
+102581,1,"D Line","","Blue Ridge/Crown Hill - Ballard - Downtown Seattle",3,https://kingcounty.gov/en/dept/metro/routes-and-service/schedules-and-maps/d-line.html,,
+102615,1,"E Line","","Aurora Village Transit Center - Downtown Seattle",3,https://kingcounty.gov/en/dept/metro/routes-and-service/schedules-and-maps/e-line.html,,
+102619,1,"F Line","","Burien TC - Tukwila Intl Blvd Sta - Renton Landing",3,https://kingcounty.gov/en/dept/metro/routes-and-service/schedules-and-maps/f-line.html,,
+102736,1,"H Line","","Burien TC - Westwood Village - Downtown Seattle",3,https://kingcounty.gov/en/dept/metro/routes-and-service/schedules-and-maps/h-line.html,,
