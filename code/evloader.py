@@ -1,6 +1,8 @@
 """Event-based loader (Section 2 v25) on hourly piecewise-constant arrivals.
-Departures continue from the last departure with the headway of the action in force
-just after that departure; capacity of a departure uses the action in force at its time.
+Departures continue from the last departure with the headway of the action in force;
+when the action changes at t0 the next departure is at max(t0, last_dep + 60/f_new min),
+i.e. max{0, 60/f_new - phi} minutes after the change (phi = time since the last departure).
+A departure exactly at a segment end runs under the closing segment's action.
 Day starts empty at t=0 with a departure phase of 0 (first departure at 0+headway).
 Queue left after the last departure <= T is cleared at zero operating cost (v21 rule);
 waiting up to T is charged."""
@@ -21,7 +23,8 @@ def area_arr(lam, a, b):
 def simulate_segment(lam, t0, t1, q, last_dep, u, w, T=24.0):
     """Run from t0 to t1 with action u=(f,n) in force. State: q = passengers waiting at t0
     (after any departure at t0), last_dep = time of last departure (<= t0).
-    Returns q_at_t1, last_dep_new, costs dict. Departures in (t0, t1] use u."""
+    Returns q_at_t1, last_dep_new, costs dict. Departures in [t0, t1] use u; one at t0 occurs
+    only when last_dep + 1/f <= t0 (the new headway has already elapsed at the change)."""
     f,n=u; H=1.0/f; C=KAPPA*n
     c=dict(wait0=0.0,waitQ=0.0,unused=0.0,op=0.0,deps=0,boarded=0.0)
     # q at t0 split: Q (left behind) vs P0 (arrived since last dep); track P0 separately
@@ -29,7 +32,7 @@ def simulate_segment(lam, t0, t1, q, last_dep, u, w, T=24.0):
     # number of arrivals since last departure up to t0 = P0_at_t0
     P0=cum_arr(lam,t0)-cum_arr(lam,last_dep) if last_dep<t0 else 0.0
     P0=min(P0,P); Q=P-P0
-    nd=last_dep+H
+    nd=max(t0,last_dep+H)   # headway clock continues from last departure, never before t0
     while nd<=t1+1e-9:
         # wait from t to nd
         a=area_arr(lam,t,nd); newarr=cum_arr(lam,nd)-cum_arr(lam,t)
