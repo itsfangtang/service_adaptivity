@@ -1,0 +1,105 @@
+{
+  "archive_rows": 40645724,
+  "archive_dates": 1924,
+  "archive_range": [
+    "2019-10-01",
+    "2025-04-01"
+  ],
+  "archive_hours": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23
+  ],
+  "od_td_rows": 4201215,
+  "od_td_identical_to_archive_window": true,
+  "od_td_same_station_rows": 95953,
+  "gtfs_feed": {
+    "feed_publisher_name": "Bay Area Rapid Transit",
+    "feed_publisher_url": "http://www.bart.gov",
+    "feed_lang": "en",
+    "feed_start_date": "20240101",
+    "feed_end_date": "20240114",
+    "feed_version": "68"
+  },
+  "gtfs_service_ids": [
+    "2023_09_11-SU-MVS-Sunday-02",
+    "2023_09_11-DX-MVS-Weekday-02",
+    "2023_09_11-SA-MVS-Saturday-02",
+    "2023_09_11-SU19-Sunday-01",
+    "2023_09_11-DX19-Weekday-01",
+    "2023_09_11-SA19-Saturday-01",
+    "2023_09_11-SU20-Sunday-01",
+    "2023_09_11-DX20-Weekday-01",
+    "2023_09_11-SA20-Saturday-01"
+  ],
+  "gtfs_calendar_range": [
+    20240101,
+    20240114
+  ],
+  "nodes": {
+    "metro_service_node": 380,
+    "metro_station": 50
+  },
+  "links": {
+    "boarding_links": 380,
+    "deboarding_links": 380,
+    "service_links": 362
+  },
+  "links_total": 1122,
+  "directed_routes": 12,
+  "dtalite_demand_hour": {
+    "dates_matching_hour7_seed": [
+      "2025-02-12"
+    ],
+    "summary_log_total": 14900,
+    "assigned_total": 14214.0
+  },
+  "route_assignment": {
+    "paths": 2971,
+    "od_pairs": 1341,
+    "paths_per_od": {
+      "1": 521,
+      "2": 294,
+      "3": 373,
+      "4": 77,
+      "5": 21,
+      "6": 55
+    },
+    "prob_sum_per_od_minmax": [
+      0.9999992,
+      1.0000006000000001
+    ],
+    "max_abs(volume - prob*seed)": 7.599999999996498e-05,
+    "inaccessible_od": 327,
+    "boardings_per_path": {
+      "1": 2971
+    }
+  },
+  "example_MCAR_0800_mean_weekday": {
+    "station_total_from_od": 525.7,
+    "covered_by_route_assignment_paths": 513.9,
+    "by_line_direction": {
+      "Orange-N": 40.5,
+      "Orange-S": 60.2,
+      "Red-S": 72.3,
+      "Yellow-N": 23.8,
+      "Yellow-S": 317.1
+    }
+  }
+}

@@ -1,171 +1,103 @@
-# Adaptive Public Transit Service Planning
+# The Value of Service Adaptivity — open data and code
 
-**Companion data and code** for:
+Companion repository for
 
-> Xuesong (Simon) Zhou and Fang (Alicia) Tang.  
-> *Adaptive Public Transit Service Planning: A Multi-Timescale Decision Framework*  
-> (manuscript, September 2026)
+> Xuesong (Simon) Zhou and Fang (Alicia) Tang.
+> *The Value of Service Adaptivity: Two-Timescale Frequency Planning with an Open San Francisco Bay Area Rail Dataset.*
+> Urban Rail Transit (under review, 2026).
 
-This repository packages the compact computational archive used in the paper: the event-based loader and exact within-day dynamic program on a modeled recovery demand matrix, the archived BART hourly OD inputs for the main application, and the Phoenix and King County experiments under thinner public ridership inputs (Section 8 of the paper).
+Archived release: **v1.0.0, DOI [10.5281/zenodo.24387602](https://doi.org/10.5281/zenodo.24387602)** (all versions: [10.5281/zenodo.24387601](https://doi.org/10.5281/zenodo.24387601)).
 
-## Overview
+The repository holds three things:
+- the open BART dataset: hourly station-to-station OD, GTFS, a GMNS network, and DTALite paths;
+- the event loader and exact within-day dynamic program, with the nested day-to-day evaluation;
+- the thinner-data checks for Phoenix and Seattle.
 
-Transit agencies must decide how often, when, and by how much to revise a committed service plan when demand changes and information is incomplete. The paper scores candidate plans with an event-based account of arrivals and boardings (ordinary waiting, left-behind waiting, and unused capacity), solves the within-day problem by a label-setting dynamic program on a finite grid of transition times, and nests that day problem across a recovery.
+Every number in the paper that is computed (not assumed) can be regenerated from these files. **New users should start with [TEACHING_GUIDE.md](TEACHING_GUIDE.md)**. It explains how the OD demand, the link and path files, and the dynamic program fit together.
 
-**What this package reproduces**
-
-| Component | Role in the paper |
-|---|---|
-| Modeled 30×24 recovery demand + exact DP | Main Boards / Figures for within-day and nested day-to-day results |
-| BART hourly station-to-station OD | Main application: recovery demand construction and service adaptivity |
-| Valley Metro Rail (Phoenix) monthly boardings | Section 8: origin-only monthly Newell check |
-| King County Metro RapidRide AM boardings | Section 8: line-level Newell checks |
-
-**What is not in this package**
-
-- The illustrative full-day Red Line stress-replay values reported from an earlier archived experiment (see the paper’s data-availability statement).
-
-## Repository layout
-
-```
-.
-├── README.md                 # this file
-├── data/
-│   ├── BART/                 # BART hourly ridership + GTFS + GMNS
-│   ├── Phoenix/              # Valley Metro boardings + GTFS + GMNS
-│   └── King_county/          # RapidRide AM boardings + GTFS + GMNS
-└── code/
-    ├── README.md             # DP / Section 3–6 reproduction notes
-    ├── demo_sensor_demand_30x24.csv
-    ├── evloader.py, dayDP.py, …   # exact within-day and nested scripts
-    ├── phoenix/              # Phoenix monthly experiment
-    └── king_county/          # King County RapidRide experiment
-```
-
-## Requirements
-
-- Python 3.9+ recommended
-- `numpy`, `pandas`
-- `matplotlib` (figures)
-- `openpyxl` (Phoenix `.xlsx` boardings workbook)
-
-Install with:
+## Quick start
 
 ```bash
 pip install numpy pandas matplotlib openpyxl
-```
-
-Run scripts from the repository root (or follow the paths noted in each subdirectory README).
-
-## Reproducing the main modeled results
-
-The compact DP package uses an archived **modeled** 30×24 recovery demand matrix (`code/demo_sensor_demand_30x24.csv`), not observed BART counts. Conventions match the paper (FIFO; whole-hour transitions; weights \(c_0=c_Q=1\), \(c_E\in\{0,1\}\), 2 per car-departure; \(\kappa=56.25\) spaces/car).
-
-```bash
 cd code
-python make_demand.py          # CSV -> demand.npy
-python reproduce_boards.py     # loader checks against Board numbers
-python verify.py               # exact DP == full enumeration (M<=3)
-python dayDP.py 9              # J*(M) for day 10, M<=5
-python contval.py              # keep/switch continuation values
-python curves.py               # exact-count curves -> curves.json
-python fig_curves.py           # Figure 7
-python s4_partition.py         # partition / excess-waiting table
-python s4_drift.py             # Appendix drift checks
-python s5_shape.py             # shape vs uniform shock
-python s6_nested.py            # nested M–N evaluation
+python make_demand.py && python reproduce_boards.py && python verify.py && python s6_nested.py
+cd ..
+python -I code/bart/bart_observed_demand.py
+python -I code/bart/bart_macarthur.py
 ```
 
-Details and expected numerical conventions are in [`code/README.md`](code/README.md).
+The scripts need Python 3.9 or later. The full list of scripts, with the paper exhibit each one reproduces and its expected output, is in [`code/README.md`](code/README.md) (model results) and [`code/bart/README.md`](code/bart/README.md) (observed BART results).
 
-## Reproducing the Section 8 experiments
+## What reproduces what
 
-### Phoenix (origin-only monthly boardings)
+| Paper exhibit | Script | Data |
+|---|---|---|
+| Figs 5, 6, 8; Table 3 (08:00 keep/switch) | `code/reproduce_boards.py`, `code/contval.py` | modeled 30×24 demand |
+| Fig 9 (exact-count curves, hull break-even charges) | `code/curves.py`, `code/fig_curves.py`, `code/dayDP.py` | modeled |
+| Table 5 (partition, Newell 2,595.5), Table 6, App. A.3 | `code/s4_partition.py`, `code/s4_drift.py` | modeled |
+| Fig 10 (shock shape) | `code/s5_shape.py` | modeled |
+| Table 8 (value of M within-day stages and N daily plans) | `code/s6_nested.py` | modeled + 2.5% hourly noise, seed 19 |
+| DP = complete enumeration (64,729 plans) | `code/verify.py` | modeled |
+| Fig 11 (123 weekdays, mean 167,988, CV 0.149); 8.7% systemwide | `code/bart/bart_observed_demand.py`, `code/bart/bart_newell_systemwide.py` | `data/BART/GMNS/OD_demand_td.csv` |
+| Fig 12 (MacArthur 81.8 vs 66.7 pax-h, 18.4%) | `code/bart/bart_macarthur.py` | same |
+| Figs 3 and 6 input profiles (24th St Mission) | `code/bart/bart_24th_profiles.py` | `data/BART/demand.csv.gz` |
+| Fig 7, Section 2.5 (network, paths, boarding resources) | `code/bart/bart_data_lineage.py` | `data/BART/GMNS/`, `data/BART/column_pool/` |
+| Table 10, Appendix D (Phoenix 1.37%, Seattle 6.4%) | `code/phoenix/…`, `code/king_county/…` | `data/Phoenix/`, `data/King_county/` |
 
-```bash
-python code/phoenix/phoenix_monthly_experiment.py
-```
-
-**Inputs:** `data/Phoenix/boardings-by-station-database---fy09-to-present-1738184335.xlsx`, `data/Phoenix/GTFS/`, `data/Phoenix/GMNS/`  
-**Outputs:** `code/phoenix/output/` (OD diagnostics, monthly Newell shares, `experiment_summary.json`) and `figures/fig_phoenix_monthly.pdf`
-
-### King County RapidRide (line-level AM boardings)
-
-```bash
-python code/king_county/kingcounty_experiment.py
-```
-
-**Inputs:** `data/King_county/average_weekday_boardings_rapidride.csv`, `data/King_county/GTFS/`  
-**Outputs:** `code/king_county/output/` and `figures/fig_kingcounty_monthly.pdf`
-
-**Headline numbers (current run):** 14 directed routes; 750 route–month OD estimates; October 2023 has 83 trips/h; square-root vs uniform **6.4%**; vs archived frequencies **3.5%**; monthly AM total (50 months) **2.1%**.
-
-See [`code/king_county/README.md`](code/king_county/README.md).
-
-## Data description and provenance
+## Data
 
 ### BART (`data/BART/`)
 
-| File / folder | Content |
+| File | Content |
 |---|---|
-| `demand.csv.gz` | Archived hourly station-to-station OD volumes (gzipped CSV) |
-| `GTFS/` | BART public schedule snapshot |
-| `GMNS/` | Network nodes and links derived for impedance / context |
+| `demand.csv.gz` | BART public hourly OD ridership: 1,924 dates, 1 Oct 2019–1 Apr 2025, hours 05–23, 50 stations. Fields: `date, hour, day_type, origin, o_zone_id, destination, d_zone_id, volume`. |
+| `GMNS/OD_demand_td.csv` | The paper's analysis window: the rows of `demand.csv.gz` dated 1 Oct 2024–1 Apr 2025, which is 174 dates (123 weekdays). Same fields. |
+| `GTFS/` | BART feed version 68, valid 1–14 Jan 2024. It carries the weekday service pattern introduced on 11 Sep 2023. |
+| `GMNS/node.csv`, `GMNS/link.csv` | The GTFS 07:00–08:00 trips converted to GMNS: 50 stations and 380 service nodes (430 nodes); 380 boarding, 380 alighting and 362 service links (1,122 links). |
+| `GMNS/OD_demand_7_Wed.csv` | The DTALite input: the 07:00 hour of Wed 12 Feb 2025 (1,668 OD cells, 14,900 trips). |
+| `GMNS/route_assignment.csv` | DTALite path assignment for that hour: 2,971 paths over 1,341 OD pairs, with path shares `prob`. |
+| `column_pool/columns.csv` | The full candidate path set used in the paper: 4,898 paths over all 2,450 OD markets, as link sequences. |
+| `GMNS/run_dtalite.py` | Rebuilds the assignment. It needs the `DTALite` Python package and overwrites `node.csv` and `link.csv` in place, so run it on a copy. |
 
-`demand.csv.gz` fields: `date`, `hour`, `day_type` (Weekday / Saturday / Sunday), `origin`, `o_zone_id`, `destination`, `d_zone_id`, `volume`. Coverage is roughly October 2019–April 2025, operating hours 5–23, across 50 BART stations. This is the archived hourly OD table used in the main application; schedules and published ridership remain public from BART.
+Holidays are absent from the archive rather than flagged. The paper drops same-station records (origin = destination) in all of its statistics.
 
-### Phoenix / Valley Metro Rail (`data/Phoenix/`)
+### Phoenix (`data/Phoenix/`) and Seattle (`data/King_county/`)
 
-| File / folder | Content |
-|---|---|
-| `boardings-by-station-database---fy09-to-present-1738184335.xlsx` | Monthly boardings by station (agency open data) |
-| `GTFS/` | Public transit schedule snapshot (City of Phoenix / Valley Metro feed) |
-| `GMNS/` | Network nodes and links derived for impedance / context |
+- **Phoenix:** Valley Metro Rail monthly boardings by station (FY2009 onward). The archive covers the single-line system that ran before June 2025, with 46 station records.
+- **Seattle:** King County Metro RapidRide average weekday AM boardings by directed route and month, through May 2024 (lines A–F and H; the G Line opened in September 2024).
 
-Estimated monthly OD matrices are **production-constrained gravity** outputs under a calibrated distance decay; they are not surveyed Phoenix travel.
+Both folders include GTFS and GMNS files. Their OD matrices are gravity estimates, not surveyed travel; see the teaching guide, Section 9.
 
-### King County Metro RapidRide (`data/King_county/`)
+## Notes on the code
 
-| File / folder | Content |
-|---|---|
-| `average_weekday_boardings_rapidride.csv` | Average weekday AM (5–9am) boardings by directed RapidRide route and month |
-| `GTFS/` | King County Metro (and related) GTFS snapshot for stop sequences |
-| `GMNS/` | Network nodes and links |
-
-Stop-level OD on each line is estimated from line totals and the GTFS sequence under a declared mid-route prior and forward gravity rule; not surveyed OD. Boarding counts with thousands separators are stripped before numeric conversion so routes with ≥1,000 riders are retained.
-
-### Third-party data terms
-
-Agency ridership files and GTFS feeds remain subject to the terms of their publishers (BART; Valley Metro / City of Phoenix; King County Metro). Redistribution in this archive is for research reproducibility accompanying the manuscript. Please cite the original agencies when reusing their data, and check current open-data licenses before commercial use.
+- **Departure timing.** `code/evloader.py` implements the paper's rule that after a change of action the next departure comes max{0, 60/f_new − φ} minutes later.
+  - Release v1.0.0 scheduled it too early when a change fell between departures, which never happens on the whole-hour grid the paper uses.
+  - This was fixed after v1.0.0, and `code/tests/test_evloader_phase.py` covers it. Every published number is unchanged.
+- **End-of-day clearance.** Passengers still waiting at 24:00 are cleared at no operating charge. In the Table 8 solutions the residual queue is zero to numerical tolerance.
 
 ## Citation
 
-If you use this code or data, please cite the paper:
-
 ```bibtex
-@unpublished{zhou2026adaptivity,
-  title   = {Adaptive Public Transit Service Planning:
-             A Multi-Timescale Decision Framework},
+@article{zhou2026adaptivity,
+  title   = {The Value of Service Adaptivity: Two-Timescale Frequency Planning
+             with an Open San Francisco Bay Area Rail Dataset},
   author  = {Zhou, Xuesong and Tang, Fang},
-  note    = {Manuscript},
+  journal = {Urban Rail Transit},
+  note    = {Under review},
+  year    = {2026}
+}
+@software{tang2026serviceadaptivity,
+  author  = {Tang, Fang and Zhou, Xuesong},
+  title   = {service\_adaptivity: open data and code},
+  version = {1.0.0},
+  doi     = {10.5281/zenodo.24387602},
   year    = {2026}
 }
 ```
 
-Update the BibTeX entry with the journal / DOI once the article is accepted.
+## Acknowledgments and license
 
-## Acknowledgments
+This work was supported by the U.S. National Science Foundation CMMI LEAP-HI program, Award No. 2053373.
 
-Supported by the U.S. National Science Foundation CMMI LEAP-HI program under Award No. 2053373, “Re-Engineering for Adaptable Lives and Businesses.”
-
-## Contact
-
-- Xuesong (Simon) Zhou  
-- Fang (Alicia) Tang  
-
-For questions about reproducing the main BART application numbers, contact the authors.
-
-## License
-
-- **Code** in `code/`: MIT (see `LICENSE`).
-- **Agency data** in `data/`: retain original publisher rights and attribution; not relicensed by the authors.
+- The code in `code/` is under the MIT license (see `LICENSE`).
+- The agency data in `data/` (BART; Valley Metro / City of Phoenix; King County Metro) keep their publishers' terms. Please cite the agencies when you reuse them.
